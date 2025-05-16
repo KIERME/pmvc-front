@@ -1,11 +1,13 @@
-import './Home.css';
 import '../index.css';
 import logo from '../assets/images/PMVC Logo.png';
 import pmv from '../assets/images/Logo Votorantim.png';
+import { Link } from 'react-router-dom';
+
+
 
 export default function Home() {
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#0062A4] to-[#004A7B]">
         <div className="bg-white p-6  rounded-2xl shadow-2xl w-full max-w-lg">
         <img src={logo} alt="Logo PMVC" className="mx-auto w-36 -mt-6 -mb-3" />
             <form className="flex flex-col gap-4">
@@ -29,7 +31,7 @@ export default function Home() {
 
             <div className="mt-12 text-lg text-[#004A7B] text-center">
                 AINDA NAO TEM CONTA? <br />
-            <a href="#" className="hover:underline">CADASTRE-SE</a>
+            <Link to='/Cadastro' className="hover:underline">CADASTRE-SE</Link>
             </div>
         </div>
 
