@@ -74,7 +74,7 @@ export default function Cadastro() {
         setCpf(value);
     };
 
-    
+    //AQUISIÇÃO DOS DADOS
     const [nome, setNome] = useState('');
 
     const handleNomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,12 +107,8 @@ export default function Cadastro() {
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-[#0062A4] to-[#004A7B]">
-        <div className="bg-white p-6  rounded-2xl shadow-2xl w-full max-w-xl">
-
-    
-                    
+        <div className="bg-white p-6  rounded-2xl shadow-2xl w-full max-w-xl">        
             <img src={logo} alt="Logo PMVC" className="mx-auto w-36 -mt-6 -mb-3" />
-        
             <form className="flex flex-col gap-4" onSubmit={handleCadastro}>
                 <div className='flex gap-2'>
             <input

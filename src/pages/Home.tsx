@@ -3,24 +3,60 @@ import logo from '../assets/images/PMVC Logo.png';
 import pmv from '../assets/images/Logo Votorantim.png';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-
-
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
 
-    //MATRICULA APENAS NUMEROS
+    //AQUISIÇÃO DOS DADOS
         const [matricula, setMatricula] = useState('');
     
         const handleMatriculaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             const value = e.target.value.replace(/\D/g, ''); // remove tudo que não for dígito
             setMatricula(value);
-            };
+        };
 
+        const [senha, setSenha] = useState('');
+        
+        const handleSenhaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+                setSenha(e.target.value)
+        }
+    //AQUISIÇÃO DOS DADOS
+    
+    
+        const [erro, setErro] = useState("");
+        const navigate = useNavigate();
+
+        const handleLogin = async (e:React.FormEvent<HTMLFormElement>) => {
+                e.preventDefault()
+                try {
+                    const response = await fetch("http://localhost:8080/api/auth/login", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ matricula, senha })
+                    });
+
+                    if (response.ok) {
+                        // Login aprovado!
+                        navigate("/Cadastro");
+                    } else if (response.status === 401) {
+                        // Login inválido
+                        setErro("Matrícula ou senha incorretas.");
+                    } else {
+                        // Outro erro inesperado
+                        setErro("Erro inesperado. Tente novamente.");
+                    }
+                    } catch (error) {
+                    setErro("Erro de conexão com o servidor.");
+                    console.error("Erro na requisição:", error);
+                    }
+
+        }
+            
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#0062A4] to-[#004A7B]">
         <div className="bg-white p-6  rounded-2xl shadow-2xl w-full max-w-lg">
         <img src={logo} alt="Logo PMVC" className="mx-auto w-36 -mt-6 -mb-3" />
-            <form className="flex flex-col gap-4">
+            <form className="flex flex-col gap-4" onSubmit={handleLogin}>
             <input
                 type="text"
                 placeholder="MATRICULA"
@@ -32,9 +68,14 @@ export default function Home() {
             />
             <input
                 type="password"
+                value={senha}
+                onChange={handleSenhaChange}
                 placeholder="SENHA"
                 className="bg-gray-200 border text-center border-gray-300 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+
+             {erro && <p style={{ color: "red" }}>{erro}</p>}
+
             <button
                 type="submit"
                 className="bg-[#004A7B] text-white py-2 rounded-xl hover:bg-blue-700 transition-all"
