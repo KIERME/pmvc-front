@@ -1,7 +1,7 @@
 import '../index.css';
 import logo from '../assets/images/PMVC Logo.png';
 import pmv from '../assets/images/Logo Votorantim.png';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Cadastro() {
@@ -22,9 +22,8 @@ export default function Cadastro() {
 
         value = value.replace(/\D/g, ''); //remove letras
 
-        if (value.length <= 2) {
-            value = value;
-        } else if (value.length <= 4) {
+        
+        if (value.length <= 4) {
             value = value.replace(/(\d{2})(\d+)/, '$1/$2');
         } else if (value.length <= 6) {
             value = value.replace(/(\d{2})(\d{2})(\d+)/, '$1/$2/$3');
@@ -64,9 +63,7 @@ export default function Cadastro() {
 
         value = value.replace(/\D/g, ''); //remove letras
         
-        if (value.length <= 3) {
-            value = value;
-        } else if (value.length <= 6) {
+        if (value.length <= 6) {
             value = value.replace(/(\d{3})(\d+)/, '$1.$2');
         } else if (value.length <= 9) {
             value = value.replace(/(\d{3})(\d{3})(\d+)/, '$1.$2.$3');
@@ -78,6 +75,34 @@ export default function Cadastro() {
     };
 
     
+    const [nome, setNome] = useState('');
+
+    const handleNomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setNome(e.target.value)
+    }
+
+    const [senha, setSenha] = useState('');
+
+    const handleSenhaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSenha(e.target.value)
+    }
+
+    const [confirmarSenha, setConfirmarSenha] = useState('');
+
+    const handleconfirmarSenhaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setConfirmarSenha(e.target.value)
+    }
+    
+    const handleCadastro = async (e:React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        const response = await fetch('http://localhost:8080/api/cadastro', {
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify({matricula, nome, cpf, telefone, dataNascimento, senha, confirmarSenha})
+        })
+        const resJSON = await response.json()
+        console.log(resJSON)
+    }
 
 
     return (
@@ -88,7 +113,7 @@ export default function Cadastro() {
                     
             <img src={logo} alt="Logo PMVC" className="mx-auto w-36 -mt-6 -mb-3" />
         
-            <form className="flex flex-col gap-4">
+            <form className="flex flex-col gap-4" onSubmit={handleCadastro}>
                 <div className='flex gap-2'>
             <input
                 type="text"
@@ -131,16 +156,22 @@ export default function Cadastro() {
                     </div>
             <input
                 type="text"
+                value={nome}
+                onChange={handleNomeChange}
                 placeholder="NOME COMPLETO"
                 className="bg-gray-200 border text-center border-gray-300 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
                 type="password"
                 placeholder="SENHA"
+                value={senha}
+                onChange={handleSenhaChange}
                 className="bg-gray-200 border text-center border-gray-300 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
                 type="password"
+                value={confirmarSenha}
+                onChange={handleconfirmarSenhaChange}
                 placeholder="CONFIRMAR SENHA"
                 className="bg-gray-200 border text-center border-gray-300 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
