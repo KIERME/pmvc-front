@@ -2,10 +2,20 @@ import '../index.css';
 import logo from '../assets/images/PMVC Logo.png';
 import pmv from '../assets/images/Logo Votorantim.png';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 
 
 export default function Home() {
+
+    //MATRICULA APENAS NUMEROS
+        const [matricula, setMatricula] = useState('');
+    
+        const handleMatriculaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            const value = e.target.value.replace(/\D/g, ''); // remove tudo que não for dígito
+            setMatricula(value);
+            };
+
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#0062A4] to-[#004A7B]">
         <div className="bg-white p-6  rounded-2xl shadow-2xl w-full max-w-lg">
@@ -14,6 +24,10 @@ export default function Home() {
             <input
                 type="text"
                 placeholder="MATRICULA"
+                inputMode="numeric"
+                value={matricula}
+                onChange={handleMatriculaChange}
+                maxLength={5}
                 className="bg-gray-200 border font-koulen text-center border-gray-300 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
