@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-    font-family: 'Koulen', sans-serif;
+    font-family: 'Poppins', sans-serif;
     }
 
 input[type="date"]::-webkit-inner-spin-button,

@@ -3,6 +3,7 @@ import logo from '../assets/images/PMVC Logo.png';
 import pmv from '../assets/images/Logo Votorantim.png';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export default function Cadastro() {
 
@@ -93,15 +94,35 @@ export default function Cadastro() {
         setConfirmarSenha(e.target.value)
     }
     
+    const [erro, setErro] = useState("");
+    const navigate = useNavigate();
+
     const handleCadastro = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        const response = await fetch('http://localhost:8080/api/cadastro', {
-            method: 'POST',
-            headers: {'content-type': 'application/json'},
-            body: JSON.stringify({matricula, nome, cpf, telefone, dataNascimento, senha, confirmarSenha})
-        })
-        const resJSON = await response.json()
-        console.log(resJSON)
+                try {
+                    const response = await fetch("http://localhost:8080/api/cadastro", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ matricula, dataNascimento, telefone, cpf, nome, senha, confirmarSenha })
+                    });
+
+                    const resJson = await response.json();
+                    console.log("Login aprovado!", resJson);
+
+                    if (response.ok) {
+                        // Login aprovado!
+                        navigate("/");
+                    } else if (response.status === 401) {
+                        // Login inválido
+                        setErro("Usuario ja cadastrado.");
+                    } else {
+                        // Outro erro inesperado
+                        setErro("Erro inesperado. Tente novamente.");
+                    }
+                    } catch (error) {
+                    setErro("Erro de conexão com o servidor.");
+                    console.error("Erro na requisição:", error);
+                    }
     }
 
 
@@ -171,6 +192,8 @@ export default function Cadastro() {
                 placeholder="CONFIRMAR SENHA"
                 className="bg-gray-200 border text-center border-gray-300 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+
+            {erro && <p className='mx-auto' style={{ color: "red" }}>{erro}</p>}
             
             <button
                 type="submit"
