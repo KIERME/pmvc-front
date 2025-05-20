@@ -2,9 +2,9 @@ import Layout from '../components/layout';
 import React from 'react';
 import { useState } from 'react';
 
-export default function abrirChamado() {
+export default function AbrirChamado() {
 
-    const [nome, setNome] = useState("");
+        const [nome, setNome] = useState("");
         const [setorOrigem, setSetorOrigem] = useState("");
         const [descricao, setDescricao] = useState("");
 
