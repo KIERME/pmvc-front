@@ -7,7 +7,7 @@ export default function Sidebar() {
     <aside className="w-64 min-h-screen bg-[#0047AB] flex flex-col justify-between">
       <div>
         <div className="bg-white">
-          <div className="text-center font-extrabold text-2xl flex justify-center items-center gap-1">
+          <div className="text-center font-extrabold text-2xl flex justify-center items-center">
             <img src={logo} className='w-24' alt="" />
           </div>
         </div>
@@ -18,9 +18,9 @@ export default function Sidebar() {
           <Link to={'/abrirChamado'} className="flex items-center gap-3 text-white font-bold hover:text-[#FFCC00]">
             <AlertTriangle size={22} /> ABRIR CHAMADO
           </Link>
-          <a href="#" className="flex items-center gap-3 text-white font-bold hover:text-[#FFCC00]">
+          <Link to={'/meusChamados'} className="flex items-center gap-3 text-white font-bold hover:text-[#FFCC00]">
             <List size={22} /> MEUS CHAMADOS
-          </a>
+          </Link>
           <a href="#" className="flex items-center gap-3 text-white font-bold hover:text-[#FFCC00]">
             <User size={22} /> MINHA CONTA
           </a>

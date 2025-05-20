@@ -109,16 +109,11 @@ export default function Cadastro() {
                     const resJson = await response.json();
                     console.log("Login aprovado!", resJson);
 
-                    if (response.ok) {
-                        // Login aprovado!
-                        navigate("/");
-                    } else if (response.status === 401) {
-                        // Login inválido
-                        setErro("Usuario ja cadastrado.");
-                    } else {
-                        // Outro erro inesperado
-                        setErro("Erro inesperado. Tente novamente.");
+                    if (!response.ok) {
+                        setErro(resJson.mensagem)
+                        return
                     }
+                        navigate('/')
                     } catch (error) {
                     setErro("Erro de conexão com o servidor.");
                     console.error("Erro na requisição:", error);

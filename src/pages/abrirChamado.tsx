@@ -2,19 +2,34 @@ import Layout from '../components/layout';
 import React from 'react';
 import { useState } from 'react';
 
+type createChamadoFormProps = {
+  nome: string
+  setorOrigem: string
+  descricao: string
+  setorDestino: string
+}
+
 export default function AbrirChamado() {
+  const [formData, setFormData] = useState<createChamadoFormProps>({
+    nome: '',
+    descricao: '',
+    setorOrigem: '',
+    setorDestino: '',
+  })
 
-        const [nome, setNome] = useState("");
-        const [setorOrigem, setSetorOrigem] = useState("");
-        const [descricao, setDescricao] = useState("");
+  const setores = ["RH", "SEF", "SENJ", "SEA", "PAT"];
 
-        const setores = ["RH", "SEF", "SENJ", "SEA", "PAT"];
+  const handleFormUpdate = (value: string, name: string) => {
+    setFormData({
+      ...formData,
+      [name]: value,
+    })
+  }
 
-        const handleSubmit = (e: React.FormEvent) => {
-            e.preventDefault();
-            console.log({ nome, setorOrigem, descricao });
-            // aqui você pode enviar via fetch/axios
-        };
+  const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      console.log(formData)
+  };
 
   return (
     <Layout>
@@ -24,48 +39,49 @@ export default function AbrirChamado() {
 
             <label className="block mb-2 font-semibold">Nome</label>
             <input
-          className="w-full mb-4 p-2 border rounded"
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-          required
-        />
+              name="nome"
+              className="w-full mb-4 p-2 border rounded"
+              onChange={(e) => handleFormUpdate(e.target.value, e.target.name)}
+              required
+            />
 
-        <label className="block mb-2 font-semibold">Setor que trabalha</label>
-        <select
-          className="w-full mb-4 p-2 border rounded"
-          value={setorOrigem}
-          onChange={(e) => setSetorOrigem(e.target.value)}
-          required
-        >
-          <option value="" disabled>Selecione</option>
-          {setores.map((s) => (
-            <option key={s} value={s}>{s}</option>
-          ))}
-        </select>
+          <label className="block mb-2 font-semibold">Setor que trabalha</label>
+          <select
+            name="setorOrigem"
+            className="w-full mb-4 p-2 border rounded pr-4"
+            onChange={(e) => handleFormUpdate(e.target.value, e.target.name)}
+            required
+          >
+            <option value="" disabled>Selecione</option>
+            {setores.map((s) => (
+              <option key={s} value={s}>{s}</option>
+            ))}
+          </select>
 
-        <label className="block mb-2 font-semibold">Setor de destino</label>
-        <select
-            className="w-full mb-4 p-2 border rounded bg-gray-100 text-gray-600 cursor-not-allowed"
-            value="TI"
-            disabled
-            >
-            <option value="TI">TI</option>
-        </select>
+          <label className="block mb-2 font-semibold">Setor de destino</label>
+          <select
+              name='setorDestino'
+              className="w-full mb-4 p-2 border rounded bg-gray-100 text-gray-600 cursor-not-allowed"
+              onChange={(e) => handleFormUpdate(e.target.value, e.target.name)}
+              disabled
+              >
+              <option value="TI">TI</option>
+          </select>
 
-        <label className="block mb-2 font-semibold">Descrição</label>
-        <textarea
-          className="w-full mb-6 p-2 border rounded"
-          value={descricao}
-          onChange={(e) => setDescricao(e.target.value)}
-          required
-        />
+          <label className="block mb-2 font-semibold">Descrição</label>
+          <textarea
+            name="descricao"
+            className="w-full mb-6 p-2 border rounded"
+            onChange={(e) => handleFormUpdate(e.target.value, e.target.name)}
+            required
+          />
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded font-semibold"
-        >
-          ABRIR CHAMADO
-        </button>
+          <button
+            type="submit"
+            className="w-full bg-[#0047AB] hover:bg-blue-600 text-white py-2 rounded font-semibold"
+          >
+            ABRIR CHAMADO
+          </button>
       </form>
     </div>
     </Layout>
