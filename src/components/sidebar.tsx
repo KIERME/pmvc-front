@@ -12,19 +12,19 @@ export default function Sidebar() {
           </div>
         </div>
         <nav className="flex flex-col gap-5 px-6 pt-8">
-          <a href="#" className="flex items-center gap-3 text-white font-bold hover:text-blue-700">
+          <a href="#" className="flex items-center gap-3 text-white font-bold hover:text-[#FFCC00]">
             <Home size={22} /> HOME
           </a>
-          <Link to={'/abrirChamado'} className="flex items-center gap-3 text-white font-bold hover:text-blue-700">
+          <Link to={'/abrirChamado'} className="flex items-center gap-3 text-white font-bold hover:text-[#FFCC00]">
             <AlertTriangle size={22} /> ABRIR CHAMADO
           </Link>
-          <a href="#" className="flex items-center gap-3 text-white font-bold hover:text-blue-700">
+          <a href="#" className="flex items-center gap-3 text-white font-bold hover:text-[#FFCC00]">
             <List size={22} /> MEUS CHAMADOS
           </a>
-          <a href="#" className="flex items-center gap-3 text-white font-bold hover:text-blue-700">
+          <a href="#" className="flex items-center gap-3 text-white font-bold hover:text-[#FFCC00]">
             <User size={22} /> MINHA CONTA
           </a>
-          <a href="#" className="flex items-center py-4 gap-2 text-red-600 font-bold hover:text-red-800 mb-4">
+          <a href="#" className="flex items-center mt-24 gap-2 text-red-600 font-bold hover:text-red-800 mb-4">
           <LogOut size={20} /> SAIR
           </a>
         </nav>
