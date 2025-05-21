@@ -42,7 +42,7 @@ export default function Login() {
 
                     if (response.ok) {
                         // Login aprovado!
-                        navigate("/Home");
+                        navigate("/meusChamados");
                     } else if (response.status === 500) {
                         // Login inválido
                         setErro("Senha incorreta.");
@@ -95,7 +95,7 @@ export default function Login() {
             </div>
         </div>
 
-        <div className="fixed p-5 bottom-4 left-4 flex items-center gap-2 text-white text-md">
+        <div className="fixed p-5 bottom-4 flex items-center gap-2 text-white text-md">
         <img src={pmv} alt="Brasão de Votorantim" className="w-12 h-auto" />
         <span className="uppercase tracking-wide">Prefeitura de Votorantim</span>
 </div>

@@ -1,8 +1,8 @@
 import Layout from '../components/layout';
 import React from 'react';
 import { useState } from 'react';
-import { useToast } from "../hooks/use-toast"
-
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 
   type createChamadoFormProps = {
     nome: string
@@ -12,12 +12,14 @@ import { useToast } from "../hooks/use-toast"
   }
 
   export default function AbrirChamado() {
-    const { toast } = useToast()
-    const [formData, setFormData] = useState<createChamadoFormProps>({
+      const navigate = useNavigate ()
+
+      const [formData, setFormData] = useState<createChamadoFormProps>({
       nome: '',
       motivoAbertura: '',
       setorTrabalha: '',
       setorDestino: 'TI',
+
     })
 
   const setores = ["RH", "SEF", "SENJ", "SEA", "PAT"];
@@ -44,10 +46,13 @@ import { useToast } from "../hooks/use-toast"
 
           const data = await response.json()
 
-          toast({
-          title: "CHAMADO ABERTO!",
-          description: `Protocolo: ${data.protocolo}`,
-        })
+          toast.success("CHAMADO ABERTO!",{
+            action: {
+              label: 'Meus chamados',
+              onClick: () => {navigate('/meusChamados')}
+            },
+            description: `Protocolo: ${data.protocolo}`,
+          })
       }
   }
 

@@ -1,4 +1,4 @@
-import { Home, AlertTriangle, List, User, LogOut } from 'lucide-react';
+import { AlertTriangle, List, User, LogOut } from 'lucide-react';
 import logo from '../assets/images/PMVC Logo.png';
 import { Link } from 'react-router-dom';
 
@@ -12,9 +12,6 @@ export default function Sidebar() {
           </div>
         </div>
         <nav className="flex flex-col gap-5 px-6 pt-8">
-          <a href="#" className="flex items-center gap-3 text-white font-bold hover:text-[#FFCC00]">
-            <Home size={22} /> HOME
-          </a>
           <Link to={'/abrirChamado'} className="flex items-center gap-3 text-white font-bold hover:text-[#FFCC00]">
             <AlertTriangle size={22} /> ABRIR CHAMADO
           </Link>
