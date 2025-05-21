@@ -1,16 +1,18 @@
 import Layout from '../components/layout';
 import React from 'react';
 import { useState } from 'react';
+import { useToast } from "../hooks/use-toast"
 
 
-type createChamadoFormProps = {
-  nome: string
-  setorTrabalha: string
-  motivoAbertura: string
-  setorDestino: string
-}
+  type createChamadoFormProps = {
+    nome: string
+    setorTrabalha: string
+    motivoAbertura: string
+    setorDestino: string
+  }
 
   export default function AbrirChamado() {
+    const { toast } = useToast()
     const [formData, setFormData] = useState<createChamadoFormProps>({
       nome: '',
       motivoAbertura: '',
@@ -28,18 +30,26 @@ type createChamadoFormProps = {
   }
   
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
-      fetch('http://localhost:8080/api/chamados/novo', {
+      const response = await fetch('http://localhost:8080/api/chamados/novo', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('token'),
         },
         body: JSON.stringify(formData),
+      })
+      if (response.ok){
+
+          const data = await response.json()
+
+          toast({
+          title: "CHAMADO ABERTO!",
+          description: `Protocolo: ${data.protocolo}`,
+        })
       }
-      )
-      }
+  }
 
   
 
