@@ -2,20 +2,21 @@ import Layout from '../components/layout';
 import React from 'react';
 import { useState } from 'react';
 
+
 type createChamadoFormProps = {
   nome: string
-  setorOrigem: string
-  descricao: string
+  setorTrabalha: string
+  motivoAbertura: string
   setorDestino: string
 }
 
-export default function AbrirChamado() {
-  const [formData, setFormData] = useState<createChamadoFormProps>({
-    nome: '',
-    descricao: '',
-    setorOrigem: '',
-    setorDestino: '',
-  })
+  export default function AbrirChamado() {
+    const [formData, setFormData] = useState<createChamadoFormProps>({
+      nome: '',
+      motivoAbertura: '',
+      setorTrabalha: '',
+      setorDestino: 'TI',
+    })
 
   const setores = ["RH", "SEF", "SENJ", "SEA", "PAT"];
 
@@ -25,11 +26,22 @@ export default function AbrirChamado() {
       [name]: value,
     })
   }
+  
 
   const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
-      console.log(formData)
-  };
+      fetch('http://localhost:8080/api/chamados/novo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        },
+        body: JSON.stringify(formData),
+      }
+      )
+      }
+
+  
 
   return (
     <Layout>
@@ -47,7 +59,8 @@ export default function AbrirChamado() {
 
           <label className="block mb-2 font-semibold">Setor que trabalha</label>
           <select
-            name="setorOrigem"
+            name="setorTrabalha"
+            value={formData.setorTrabalha}
             className="w-full mb-4 p-2 border rounded pr-4"
             onChange={(e) => handleFormUpdate(e.target.value, e.target.name)}
             required
@@ -61,6 +74,7 @@ export default function AbrirChamado() {
           <label className="block mb-2 font-semibold">Setor de destino</label>
           <select
               name='setorDestino'
+              value={formData.setorDestino}
               className="w-full mb-4 p-2 border rounded bg-gray-100 text-gray-600 cursor-not-allowed"
               onChange={(e) => handleFormUpdate(e.target.value, e.target.name)}
               disabled
@@ -70,7 +84,8 @@ export default function AbrirChamado() {
 
           <label className="block mb-2 font-semibold">Descrição</label>
           <textarea
-            name="descricao"
+            name="motivoAbertura"
+            value={formData.motivoAbertura}
             className="w-full mb-6 p-2 border rounded"
             onChange={(e) => handleFormUpdate(e.target.value, e.target.name)}
             required

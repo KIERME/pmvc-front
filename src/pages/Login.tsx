@@ -37,6 +37,8 @@ export default function Login() {
 
                     const resJson = await response.json();
                     console.log("Login aprovado!", resJson);
+                    localStorage.setItem("token", resJson.token);
+                    localStorage.setItem("tipoUsuario", resJson.tipoUsuario);
 
                     if (response.ok) {
                         // Login aprovado!
